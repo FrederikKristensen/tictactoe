@@ -1,18 +1,24 @@
 import './App.css';
+import { useState } from 'react';
 
 // Links
 // https://react.dev/learn/tutorial-tic-tac-toe
 
-function Square({ value }) {
+function Square() {
+  const [value, setValue] = useState(null);
+
   function handleClick() {
     // Handler check
-    console.log("clicked!");
+    // console.log("clicked!");
+    setValue('X');
   }
   
   return ( 
-    <button 
-      onClick={handleClick} 
-      className="square">{value}
+    <button
+      className="square"
+      onClick={handleClick}
+    >
+      {value}
     </button>
   );
 }
@@ -21,19 +27,19 @@ export default function Board() {
   return (
     <>
       <div className="board-row">
-        <Square value="1"/>
-        <Square value="2"/>
-        <Square value="3"/>
+        <Square />
+        <Square />
+        <Square />
       </div> 
       <div className="board-row">
-        <Square value="4"/>
-        <Square value="5"/>
-        <Square value="6"/>
+        <Square />
+        <Square />
+        <Square />
       </div> 
       <div className="board-row">
-        <Square value="7"/>
-        <Square value="8"/>
-        <Square value="9"/>
+        <Square />
+        <Square />
+        <Square />
       </div> 
     
     </>
