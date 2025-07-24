@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 // Links
 // https://react.dev/learn/tutorial-tic-tac-toe
@@ -13,14 +13,29 @@ function Square({ value, onSquareClick }) {
 }
 
 export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
+  // Function that helps us put the X or O in the square
   function handleClick(i) {
+    if (squares[i]) {
+      return;
+    }
+
+    // Helps use toggle between our players
     const nextSquares = squares.slice();
-    nextSquares[i] = 'X';
+    if (xIsNext) {
+      nextSquares[i] = 'X';
+    } else {
+      nextSquares[i] = 'O';
+    }
+
+    // Set us to next turn 
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   }
 
+  // Makes our board
   return (
     <>
       <div className="board-row">
