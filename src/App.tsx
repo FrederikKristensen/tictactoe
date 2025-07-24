@@ -18,7 +18,8 @@ export default function Board() {
 
   // Function that helps us put the X or O in the square
   function handleClick(i) {
-    if (squares[i]) {
+    // "|" we write with alt numpad 124
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
 
@@ -35,9 +36,23 @@ export default function Board() {
     setXIsNext(!xIsNext);
   }
 
+  // Saveing our winner
+  const winner = calculateWinner(squares);
+  let status; 
+  // Well show our winner or who's turn it is
+  if (winner) {
+    status ='Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
+
   // Makes our board
   return (
     <>
+      {/* Makes our text for saying winner or next turn */}
+      <div className='status'>{status}</div>
+
+      {/* Makes our board */}
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
         <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
@@ -56,4 +71,32 @@ export default function Board() {
     
     </>
   );
+
+  function calculateWinner(sqaures) {
+    // Our win conditions
+    const lines = [
+      // Horizontal
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      // Vertical
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      // Diagonal
+      [0, 4, 8],
+      [2, 4, 6]
+
+    ];
+
+    // Loop through our win conditions
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (sqaures[a] && sqaures[a] === sqaures[b] && sqaures[a] === sqaures[c]) {
+        return sqaures[a]; // Return the winner (X or O)
+      }
+    }
+    // No winner yet
+    return null; 
+  }
 }
